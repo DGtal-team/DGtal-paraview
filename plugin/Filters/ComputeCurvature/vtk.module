@@ -1,0 +1,6 @@
+NAME
+  ComputeCurvature
+DEPENDS
+  VTK::FiltersCore
+  VTK::CommonCore
+

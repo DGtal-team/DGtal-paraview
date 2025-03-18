@@ -1,0 +1,7 @@
+NAME
+  DGtalParaviewPlugin
+DESCRIPTION
+  A paraview plugin for DGtal
+REQUIRES_MODULES
+  VTK::CommonCore
+  VTK::FiltersCore
