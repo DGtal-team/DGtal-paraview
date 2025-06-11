@@ -17,8 +17,7 @@ runs:
     - name: "Cloning DGtal"
       shell: bash
       run: |
-        git clone --depth 1 https://github.com/DGtal-team/DGtal.git
-        git checkout main2.0
+        git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
 
     - name: "DGtal config"
       uses: DGtal-team/DGtal/.github/actions/dgtal-config@main2.0
