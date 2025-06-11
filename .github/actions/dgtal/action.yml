@@ -22,8 +22,8 @@ runs:
     - name: "DGtal config"
       uses: DGtal-team/DGtal/.github/actions/dgtal-config@main2.0
       with:
+        dgtal: ${{ runner.workspace }}/DGtal
         config-name: "Default"
-
 
     - name: "DGtal dependencies and setup"
       uses: DGtal-team/DGtal/.github/actions/setup-os@main2.0
