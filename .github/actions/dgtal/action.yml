@@ -37,6 +37,4 @@ runs:
         dgtal: ${{ runner.workspace }}/DGtal
         build-dir: ${{ runner.workspace }}/DGtal/build
         build-config: ${{ steps.config.ouputs.cmake-config }}
-      run: |
-        echo "build-dir=${{ runner.workspace }}/DGtal/build" >> "$GITHUB_OUTPUT"
 
