@@ -22,6 +22,7 @@ runs:
     - name: "Build"
       id: "build"
       shell: bash
+      working-directory: ${{ runner.workspace }}
       run: |
         git clone --recursive https://gitlab.kitware.com/paraview/paraview.git
         
