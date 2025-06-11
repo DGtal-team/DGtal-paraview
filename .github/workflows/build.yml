@@ -1,0 +1,28 @@
+name: CI (linux/macOS/windows)
+
+on:
+  push:
+    branches: [CI, main]
+  pull_request:
+    branches: [CI, main]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        BUILD_TYPE: [Release, Debug]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Build DGtal
+        uses: ./.github/actions/dgtal
+
+      - name: Build paraview
+        uses: ./.github/actions/paraview
+

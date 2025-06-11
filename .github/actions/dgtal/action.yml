@@ -1,0 +1,42 @@
+name: "Build DGtal"
+description: "Builds the DGtal library"
+inputs:
+  config:
+    desciption: "Config name"
+    required: true
+    default: "Default"
+
+outputs:
+  build-dir:
+    description: "DGtal build directory"
+    value: ${{ steps.build.outputs.build-dir }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Cloning DGtal"
+      shell: bash
+      run: |
+        git clone --depth 1 git@github.com:DGtal-team/DGtal.git
+        git checkout main2.0
+
+    - name: "DGtal config"
+      uses: DGtal-team/DGtal/.github/actions/dgtal-config@main2.0
+      with:
+        config-name: "Default"
+
+
+    - name: "DGtal dependencies and setup"
+      uses: DGtal-team/DGtal/.github/actions/setup-os@main2.0
+
+    - name: "Building DGtal"
+      id: "build"
+      uses: DGtal-team/DGtal/.github/actions/cmake@main2.0
+      with:
+        test: false
+        dgtal: ${{ runner.workspace }}/DGtal
+        build-dir: ${{ runner.workspace }}/DGtal/build
+        build-config: ${{ steps.config.ouputs.cmake-config }}
+      run: |
+        echo "build-dir=${{ runner.workspace }}/DGtal/build" >> "$GITHUB_OUTPUT"
+
