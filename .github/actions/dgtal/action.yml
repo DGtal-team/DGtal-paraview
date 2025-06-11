@@ -18,6 +18,9 @@ runs:
       shell: bash
       run: |
         git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
+        pwd
+        ls 
+
 
     - name: "DGtal config"
       uses: DGtal-team/DGtal/.github/actions/dgtal-config@main2.0

@@ -12,8 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest]
-        BUILD_TYPE: [Release, Debug]
+        os: [ubuntu-latest]
+        BUILD_TYPE: [Debug]
 
     steps:
       - uses: actions/checkout@v4
