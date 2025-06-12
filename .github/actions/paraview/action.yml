@@ -20,21 +20,21 @@ runs:
       run: |
         brew install open-mpi cmake mesa tbb ninja gdal qt5
    
-    - name: "Build"
-      id: "build"
+    - name: "Clone"
       shell: bash
       working-directory: ${{ runner.workspace }}
       run: |
         git clone --recursive https://gitlab.kitware.com/paraview/paraview.git
-        
-        
         cmake -E make_directory ${{ runner.workspace }}/paraview/build
-        cmake -E chdir ${{ runner.workspace }}/paraview/build
+
+    - name: "Build"
+      id: build
+      shell: bash
+      working-directory: ${{ runner.workspace }}/paraview/build
+      run: |
         cmake -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . --parallel $(nproc)
       
         echo "build-dir=${{ runner.workspace }}/paraview/build" >> "$GITHUB_OUTPUT"
-
-        cmake -E chdir ${{ runner.workspace }}
 
 
