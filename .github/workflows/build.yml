@@ -21,8 +21,17 @@ jobs:
           fetch-depth: 1
 
       - name: Build DGtal
+        id: dgtal
         uses: ./.github/actions/dgtal
+      
+      - name: Checking 
+        run: |
+          echo ${{ steps.dgtal.outputs.build-dir }}
 
       - name: Build paraview
+        id: paraview
         uses: ./.github/actions/paraview
 
+      - name: Checking 
+        run: |
+          echo ${{ steps.paraview.outputs.build-dir }}
