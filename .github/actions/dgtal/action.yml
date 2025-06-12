@@ -19,22 +19,19 @@ runs:
       shell: bash
       run: |
         git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
-        pwd
-        ls 
-
 
     - name: "DGtal config"
-      uses: DGtal-team/DGtal/.github/actions/dgtal-config@main2.0
+      uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
       with:
         dgtal: ${{ runner.workspace }}/DGtal
         config-name: "Default"
 
     - name: "DGtal dependencies and setup"
-      uses: DGtal-team/DGtal/.github/actions/setup-os@main2.0
+      uses: BDoignies/DGtal/.github/actions/setup-os@CIfix
 
     - name: "Building DGtal"
       id: "build"
-      uses: DGtal-team/DGtal/.github/actions/cmake@main2.0
+      uses: BDoignies/DGtal/.github/actions/cmake@CIfix
       with:
         test: false
         dgtal: ${{ runner.workspace }}/DGtal
