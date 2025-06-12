@@ -9,7 +9,7 @@ inputs:
 outputs:
   build-dir:
     description: "DGtal build directory"
-    value: ${{ steps.build.outputs.build-dir }}
+    value: ${{ runner.workspace }}/DGtal/build 
 
 runs:
   using: "composite"
@@ -24,17 +24,32 @@ runs:
       uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
       with:
         dgtal: ${{ runner.workspace }}/DGtal
-        config-name: "Default"
+        config-name: ${{ inputs.config }}
 
     - name: "DGtal dependencies and setup"
       uses: BDoignies/DGtal/.github/actions/setup-os@CIfix
+    
+    - name: "Build cache"
+      id: build-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.workspace}}/DGtal
+        key: ${{ runner.os }}-dgtalbuild-${{ inputs.config }}
 
     - name: "Building DGtal"
-      id: "build"
+      id: build
+      if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       uses: BDoignies/DGtal/.github/actions/cmake@CIfix
       with:
         test: false
         dgtal: ${{ runner.workspace }}/DGtal
         build-dir: ${{ runner.workspace }}/DGtal/build
         build-config: ${{ steps.config.ouputs.cmake-config }}
+
+    - name: Testing 
+      shell: bash
+      run: |
+        echo "Cache: "
+        echo ${{ steps.build-cache.outputs.cache-hit }}
+        ldd ${{ runner.workspace }}/DGtal/build/src/DGtal/libDGtal.so
 
