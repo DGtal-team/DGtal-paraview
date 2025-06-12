@@ -28,11 +28,11 @@ jobs:
         run: |
           echo ${{ steps.dgtal.outputs.build-dir }}
 
-          #      - name: Build paraview
-          #        id: paraview
-          #        uses: ./.github/actions/paraview
-          #
-          #      - name: Checking 
-          #        run: |
-          #          echo ${{ steps.paraview.outputs.build-dir }}
+      - name: Build paraview
+        id: paraview
+        uses: ./.github/actions/paraview
+
+      - name: Checking 
+        run: |
+          echo ${{ steps.paraview.outputs.build-dir }}
 

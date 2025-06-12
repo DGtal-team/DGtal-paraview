@@ -3,7 +3,7 @@ description: "Build paraview"
 outputs:
   build-dir: 
     description: "Path of Paraview build directory"
-    value: ${{ steps.build.outputs.build-dir }}
+    value: ${{ runner.workspace }}/paraview/build
 
 runs:
   using: "composite"
@@ -19,8 +19,16 @@ runs:
       shell: bash
       run: |
         brew install open-mpi cmake mesa tbb ninja gdal qt5
-   
+
+    - name: "Build cache"
+      id: build-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.workspace}}/paraview
+        key: ${{ runner.os }}-paraviewbuild
+
     - name: "Clone"
+      if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       shell: bash
       working-directory: ${{ runner.workspace }}
       run: |
@@ -28,13 +36,12 @@ runs:
         cmake -E make_directory ${{ runner.workspace }}/paraview/build
 
     - name: "Build"
+      if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       id: build
       shell: bash
       working-directory: ${{ runner.workspace }}/paraview/build
       run: |
         cmake -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . --parallel $(nproc)
-      
-        echo "build-dir=${{ runner.workspace }}/paraview/build" >> "$GITHUB_OUTPUT"
 
 
