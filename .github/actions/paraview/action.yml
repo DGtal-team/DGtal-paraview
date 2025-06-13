@@ -24,7 +24,7 @@ runs:
       id: build-cache
       uses: actions/cache@v4
       with:
-        path: ${{ runner.workspace}}/paraview
+        path: ${{ runner.workspace }}/paraview
         key: ${{ runner.os }}-paraviewbuild
 
     - name: "Clone"
@@ -40,14 +40,6 @@ runs:
 
         # Necessary for statics libs
         cmake -E make_directory ${{ runner.workspace }}/paraview/build -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-
-    - name: Testing 
-      shell: bash
-      run: |
-        echo "Cache: "
-        echo ${{ steps.build-cache.outputs.cache-hit }}
-        ldd ${{ runner.workspace }}/DGtal/build/src/DGtal/libDGtal.so
-
 
     - name: "Build"
       if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}

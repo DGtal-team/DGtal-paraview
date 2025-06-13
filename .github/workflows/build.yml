@@ -23,26 +23,18 @@ jobs:
         id: dgtal
         uses: ./.github/actions/dgtal
       
-      - name: Checking 
-        run: |
-          echo ${{ steps.dgtal.outputs.build-dir }}
-
-      - name: Build paraview
+     - name: Build paraview
         id: paraview
         uses: ./.github/actions/paraview
 
-      - name: Checking 
-        run: |
-          echo ${{ steps.paraview.outputs.build-dir }}
-      
       - name: Build folder
         run: cmake -E make_directory ${{ runner.workspace }}/DGtal-paraview/build
 
-      - name: Building plugin
-        shell: bash
-        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
-        run: |
-          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
-          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
-          cmake --build .
-
+#      - name: Building plugin
+#        shell: bash
+#        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
+#        run: |
+#          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
+#          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
+#          cmake --build .
+#

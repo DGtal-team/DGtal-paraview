@@ -28,8 +28,9 @@ runs:
       id: build-cache
       uses: actions/cache@v4
       with:
-        path: ${{ runner.workspace}}/DGtal
+        path: ${{ runner.workspace }}/DGtal
         key: ${{ runner.os }}-dgtalbuild-${{ inputs.config }}
+
     - name: "DGtal config"
       if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
