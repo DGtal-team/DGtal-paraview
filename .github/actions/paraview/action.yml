@@ -34,11 +34,11 @@ runs:
       run: |
         git clone --recursive https://gitlab.kitware.com/paraview/paraview.git
 
-# Only valid for macOS
+        # Only valid for macOS
         export LDFLAGS="-L/opt/homebrew/opt/qt@5/lib"
         export CPPFLAGS="-I/opt/homebrew/opt/qt@5/include"
 
-# Necessary for statics libs
+        # Necessary for statics libs
         cmake -E make_directory ${{ runner.workspace }}/paraview/build -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
     - name: Testing 

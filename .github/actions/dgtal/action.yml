@@ -17,13 +17,6 @@ runs:
     - name: "DGtal dependencies and setup"
       uses: BDoignies/DGtal/.github/actions/setup-os@CIfix
 
-    - name: "Build cache"
-      id: build-cache
-      uses: actions/cache@v4
-      with:
-        path: ${{ runner.workspace}}/DGtal
-        key: ${{ runner.os }}-dgtalbuild-${{ inputs.config }}
-
     - name: "Cloning DGtal"
       if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       working-directory: ${{ runner.workspace }}
@@ -31,6 +24,12 @@ runs:
       run: |
         git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
 
+    - name: "Build cache"
+      id: build-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.workspace}}/DGtal
+        key: ${{ runner.os }}-dgtalbuild-${{ inputs.config }}
     - name: "DGtal config"
       if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
       uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
