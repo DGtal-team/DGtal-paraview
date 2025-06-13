@@ -23,7 +23,7 @@ jobs:
         id: dgtal
         uses: ./.github/actions/dgtal
       
-     - name: Build paraview
+      - name: Build paraview
         id: paraview
         uses: ./.github/actions/paraview
 
