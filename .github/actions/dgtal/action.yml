@@ -14,15 +14,9 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: "DGtal config"
-      uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
-      with:
-        dgtal: ${{ runner.workspace }}/DGtal
-        config-name: ${{ inputs.config }}
-
     - name: "DGtal dependencies and setup"
       uses: BDoignies/DGtal/.github/actions/setup-os@CIfix
-    
+
     - name: "Build cache"
       id: build-cache
       uses: actions/cache@v4
@@ -37,6 +31,13 @@ runs:
       run: |
         git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
 
+    - name: "DGtal config"
+      if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+      uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
+      with:
+        dgtal: ${{ runner.workspace }}/DGtal
+        config-name: ${{ inputs.config }}
+
     - name: "Building DGtal"
       id: build
       if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
@@ -46,11 +47,4 @@ runs:
         dgtal: ${{ runner.workspace }}/DGtal
         build-dir: ${{ runner.workspace }}/DGtal/build
         build-config: ${{ steps.config.ouputs.cmake-config }}
-
-    - name: Testing 
-      shell: bash
-      run: |
-        echo "Cache: "
-        echo ${{ steps.build-cache.outputs.cache-hit }}
-        ldd ${{ runner.workspace }}/DGtal/build/src/DGtal/libDGtal.so
 
