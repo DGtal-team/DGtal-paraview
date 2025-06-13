@@ -14,12 +14,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: "Cloning DGtal"
-      working-directory: ${{ runner.workspace }}
-      shell: bash
-      run: |
-        git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
-
     - name: "DGtal config"
       uses: BDoignies/DGtal/.github/actions/dgtal-config@CIfix
       with:
@@ -35,6 +29,13 @@ runs:
       with:
         path: ${{ runner.workspace}}/DGtal
         key: ${{ runner.os }}-dgtalbuild-${{ inputs.config }}
+
+    - name: "Cloning DGtal"
+      if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+      working-directory: ${{ runner.workspace }}
+      shell: bash
+      run: |
+        git clone -b main2.0 --depth 1 https://github.com/DGtal-team/DGtal.git
 
     - name: "Building DGtal"
       id: build
