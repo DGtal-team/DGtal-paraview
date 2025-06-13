@@ -45,7 +45,7 @@ runs:
         test: false
         dgtal: ${{ runner.workspace }}/DGtal
         build-dir: ${{ runner.workspace }}/DGtal/build
-        build-config: ${{ steps.config.ouputs.cmake-config }} -DDGTAL_BUILD_SHARED_LIBS=true
+        build-config: ${{ steps.config.ouputs.cmake-config }}
 
     - name: Testing 
       shell: bash
