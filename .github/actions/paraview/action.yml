@@ -24,7 +24,7 @@ runs:
         echo 'export LDFLAGS="-L/opt/homebrew/opt/qt@5/lib"' >> ~/.bashrc
         echo 'export CPPFLAGS="-I/opt/homebrew/opt/qt@5/include"' >> ~/.bashrc
 
-        source ~/.bashrc
+        cat ~/.bashrc
 
     - name: "Build cache"
       id: build-cache
@@ -40,7 +40,6 @@ runs:
       run: |
         git clone --recursive https://gitlab.kitware.com/paraview/paraview.git
 
-        # Necessary for statics libs
         cmake -E make_directory ${{ runner.workspace }}/paraview/build -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
     - name: "Build"
@@ -49,6 +48,7 @@ runs:
       shell: bash
       working-directory: ${{ runner.workspace }}/paraview/build
       run: |
+        source ~/bashrc
         cmake -DCMAKE_BUILD_TYPE=Release ..
         cmake --build . --parallel $(nproc)
 
