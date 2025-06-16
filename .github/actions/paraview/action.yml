@@ -50,6 +50,6 @@ runs:
       run: |
         source ~/.bashrc
         cmake -DCMAKE_BUILD_TYPE=Release ..
-        cmake --build . --parallel $(nproc)
+        cmake --build . 
 
 
