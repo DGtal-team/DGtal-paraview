@@ -46,5 +46,5 @@ runs:
         test: false
         dgtal: ${{ runner.workspace }}/DGtal
         build-dir: ${{ runner.workspace }}/DGtal/build
-        build-config: ${{ steps.config.ouputs.cmake-config }}
+        build-config: ${{ steps.config.ouputs.cmake-config }} -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
