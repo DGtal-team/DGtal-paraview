@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macOS-latest]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,11 +30,13 @@ jobs:
       - name: Build folder
         run: cmake -E make_directory ${{ runner.workspace }}/DGtal-paraview/build
 
-#      - name: Building plugin
-#        shell: bash
-#        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
-#        run: |
-#          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
-#          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
-#          cmake --build .
-#
+      - name: Building plugin
+        shell: bash
+        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
+        run: |
+          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
+          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
+          cmake --build .
+
+          find ./lib/ -type f
+
