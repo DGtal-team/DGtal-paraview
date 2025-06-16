@@ -40,3 +40,14 @@ jobs:
 
           find ./lib/ -type f
 
+      - name: Compress plugin (Linux)
+        shell: bash
+        run: |
+          zip -r DGtal-paraview-linux.zip ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-6.0/plugins/DGtalParaviewPlugin
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: DGtal-paraview-linux.zip
+          path: DGtal-paraview-linux.zip
+          if-no-files-found: error
