@@ -45,6 +45,7 @@ int vtkComputeCurvature::RequestData(vtkInformation *request,
   DGtalVTKImage image = GetImageFromVtkInformation(inputVectors[0]->GetInformationObject(0));
   DGtalVTKSurface surface(image); 
 
+  vtkVLog(vtkLogger::VERBOSITY_INFO, "Computation started");
   std::vector<double> curvature;
   switch(curvatureType)
   {
@@ -60,10 +61,11 @@ int vtkComputeCurvature::RequestData(vtkInformation *request,
     }
     default:
     {
-      vtkVLog(vtkLogger::VERBOSITY_ERROR, "Unknown curvatyre type");
+      vtkVLog(vtkLogger::VERBOSITY_ERROR, "Unknown curvature type");
       break;
     }      
   };
+  vtkVLog(vtkLogger::VERBOSITY_INFO, "Computation finished");
 
   vtkSmartPointer<vtkUnstructuredGrid> grid = GetVtkDataSetFromAbstractContainer(&surface, &curvature);
   outputVector->GetInformationObject(0)->Set(vtkDataObject::DATA_OBJECT(), grid);
