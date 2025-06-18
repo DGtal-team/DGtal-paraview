@@ -66,7 +66,7 @@ inline DGtalVTKImage GetImageFromVtkDataSet(vtkDataSet* dataset)
 	size_t i = 0;
 	for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
 	{
-		vtkVLog(vtkLogger::VEBOSITY_INFO, "Cell " + std::to_string(i++));
+		vtkVLog(vtkLogger::VERBOSITY_INFO, "Cell " + std::to_string(i++));
 		double rawCoordinates[3] = {0., 0., 0.};
 
 		if (it->GetCellType() != VTK_VOXEL) continue;
