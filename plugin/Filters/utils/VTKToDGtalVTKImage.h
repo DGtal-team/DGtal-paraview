@@ -60,8 +60,8 @@ inline DGtalVTKImage GetImageFromVtkDataSet(vtkDataSet* dataset)
 	
 	// Iterating values
 	auto it = dataset->NewCellIterator();
-	vtkGenericCell* cell = vtkGenericCell::New();
 	
+	vtkGenericCell* cell = vtkGenericCell::New();
 	vtkVLog(vtkLogger::VERBOSITY_INFO, "Filling data");
 	size_t i = 0;
 	for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
@@ -71,14 +71,16 @@ inline DGtalVTKImage GetImageFromVtkDataSet(vtkDataSet* dataset)
 
 		if (it->GetCellType() != VTK_VOXEL) continue;
 		
+		vtkVLog(vtkLogger::VERBOSITY_INFO, "Cell: " + std::to_string(reinterpret_cast<intptr_t>(cell)));
 		it->GetCell(cell);
+		vtkVLog(vtkLogger::VERBOSITY_INFO, "Got cell");
 		cell->EvaluateLocation(subId, parametricCoords, rawCoordinates, interpolationWeights);
 		
 		vtkVLog(vtkLogger::VERBOSITY_INFO, "Coordinates: " + std::to_string(rawCoordinates[0]) + ", " + std::to_string(rawCoordinates[1]) + ", " + std::to_string(rawCoordinates[2]));
 		dgtalImage.SetVoxel(rawCoordinates);
 	}
 	vtkVLog(vtkLogger::VERBOSITY_INFO, "Done filling");
-	
 	cell->Delete();
+	
 	return dgtalImage;
 }
