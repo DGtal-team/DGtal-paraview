@@ -43,6 +43,7 @@ int vtkComputeCurvature::RequestData(vtkInformation *request,
   auto params = SH3::defaultParameters() | SHG3::defaultParameters();
   
   DGtalVTKImage image = GetImageFromVtkInformation(inputVectors[0]->GetInformationObject(0));
+  vtkVLog(vtkLogger::VERBOSITY_INFO, "Image acquired");
   DGtalVTKSurface surface(image); 
 
   vtkVLog(vtkLogger::VERBOSITY_INFO, "Computation started");

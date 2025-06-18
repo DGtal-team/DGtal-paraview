@@ -61,7 +61,8 @@ inline DGtalVTKImage GetImageFromVtkDataSet(vtkDataSet* dataset)
 	// Iterating values
 	auto it = dataset->NewCellIterator();
 	vtkGenericCell* cell = vtkGenericCell::New();
-
+	
+	vtkVLog(vtkLogger::VERBOSITY_INFO, "Filling data");
 	for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
 	{
 		double rawCoordinates[3] = {0., 0., 0.};
