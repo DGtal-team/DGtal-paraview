@@ -59,15 +59,17 @@ inline DGtalVTKImage GetImageFromVtkDataSet(vtkDataSet* dataset)
 	const double parametricCoords[3] = {0.5, 0.5, 0.5}; /* center of cell */
 	
 	// Iterating values
-	auto it = dataset->NewCellIterator();
-	
+	vtkCellIterator* it = dataset->NewCellIterator();
 	vtkGenericCell* cell = vtkGenericCell::New();
+
 	vtkVLog(vtkLogger::VERBOSITY_INFO, "Filling data");
 	size_t i = 0;
 	for (it->InitTraversal(); !it->IsDoneWithTraversal(); it->GoToNextCell())
 	{
 		vtkVLog(vtkLogger::VERBOSITY_INFO, "Cell " + std::to_string(i++));
 		double rawCoordinates[3] = {0., 0., 0.};
+		vtkVLog(vtkLogger::VERBOSITY_INFO, "CellType " + std::to_string(it->GetCellType()));
+		vtkVLog(vtkLogger::VERBOSITY_INFO, "Cell " + std::to_string(i++));
 
 		if (it->GetCellType() != VTK_VOXEL) continue;
 		
