@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macOS-14]
+        os: [ubuntu-24.04]
 
     steps:
       - uses: actions/checkout@v4
@@ -40,9 +40,9 @@ jobs:
 
           find ./lib/ -type f
 
-#      - name: Upload Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: DGtal-paraview-linux
-#          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-5.13/plugins/DGtalParaviewPlugin
-#          if-no-files-found: error
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DGtal-paraview-linux
+          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-5.13/plugins/DGtalParaviewPlugin
+          if-no-files-found: error
