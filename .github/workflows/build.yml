@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-24.04, macOS-14]
 
     steps:
       - uses: actions/checkout@v4
@@ -36,18 +36,13 @@ jobs:
         run: |
           echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
           cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
-          cmake --build .
+          cmake --build . --parallel 4
 
           find ./lib/ -type f
 
-      - name: Compress plugin (Linux)
-        shell: bash
-        run: |
-          zip -r DGtal-paraview-linux.zip ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-6.0/plugins/DGtalParaviewPlugin
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: DGtal-paraview-linux
-          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-6.0/plugins/DGtalParaviewPlugin
-          if-no-files-found: error
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: DGtal-paraview-linux
+#          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-5.13/plugins/DGtalParaviewPlugin
+#          if-no-files-found: error
