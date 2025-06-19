@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [macOS-15]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,19 +30,19 @@ jobs:
       - name: Build folder
         run: cmake -E make_directory ${{ runner.workspace }}/DGtal-paraview/build
 
-      - name: Building plugin
-        shell: bash
-        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
-        run: |
-          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
-          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
-          cmake --build . --parallel 4
-
-          find ./lib/ -type f
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: DGtal-paraview-linux
-          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-5.13/plugins/DGtalParaviewPlugin
-          if-no-files-found: error
+#      - name: Building plugin
+#        shell: bash
+#        working-directory: ${{ runner.workspace }}/DGtal-paraview/build
+#        run: |
+#          echo "cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}"
+#          cmake .. -DParaView_DIR=${{ steps.paraview.outputs.build-dir }} -DDGtal_DIR=${{ steps.dgtal.outputs.build-dir }}
+#          cmake --build . --parallel 4
+# 
+#          find ./lib/ -type f
+# 
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: DGtal-paraview-linux
+#          path: ${{ runner.workspace }}/DGtal-paraview/build/lib/paraview-5.13/plugins/DGtalParaviewPlugin
+#          if-no-files-found: error
