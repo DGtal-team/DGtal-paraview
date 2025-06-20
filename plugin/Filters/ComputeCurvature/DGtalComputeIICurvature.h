@@ -9,12 +9,6 @@
 class COMPUTECURVATURE_EXPORT DGtalComputeIICurvature : public vtkUnstructuredGridAlgorithm
 {
 public:
-  enum class CurvatureType
-  {
-      MEAN_CURVATURE = 1, 
-      GAUSSIAN_CURVATURE = 2
-  };
-
   static DGtalComputeIICurvature* New();
   vtkTypeMacro(DGtalComputeIICurvature, vtkUnstructuredGridAlgorithm);
   
@@ -22,14 +16,16 @@ public:
                   vtkInformationVector **inputVectors,
                   vtkInformationVector *outputVector);
 
-  // Not using enum for now
-
-  void SetCurvatureType(int type);
+  void SetComputeMean     (bool value) { computeMean      = value; };
+  void SetComputeGaussian (bool value) { computeGaussian  = value; };
+  void SetComputePrincipal(bool value) { computePrincipal = value; };
   void PrintSelf(ostream& os, vtkIndent indent) override;
 
 protected:
-  CurvatureType curvatureType = CurvatureType::MEAN_CURVATURE;
-
+  bool computeMean = false;
+  bool computeGaussian = false;
+  bool computePrincipal = false;
+  
 
 protected:
   DGtalComputeIICurvature();

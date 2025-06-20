@@ -23,16 +23,28 @@
       </InputProperty>
 
       <IntVectorProperty
-        name="Curvature Type"
-        command="SetCurvatureType"
+        name="Mean Curvature"
+        command="SetComputeMean"
         number_of_elements="1"
         default_values="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
 
-        <EnumerationDomain name="enum">
-          <Entry value="1" text="Mean Curvature"/>
-          <Entry value="2" text="Gaussian Curvature"/>
-        </EnumerationDomain>
-    </IntVectorProperty>
+      <IntVectorProperty
+        name="Gaussian Curvature"
+        command="SetComputeGaussian"
+        number_of_elements="1"
+        default_values="1">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
+
+     <IntVectorProperty
+        name="Principal Curvature"
+        command="SetComputePrincipal"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool" />
+      </IntVectorProperty>
 
    </SourceProxy>
   </ProxyGroup>

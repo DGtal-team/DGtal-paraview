@@ -18,9 +18,10 @@ public:
         auto params = SH3::defaultParameters() | SHG3::defaultParameters();
         auto K = SH3::getKSpace(image, params);
 
-        surface  = SH3::makeLightDigitalSurface( image, K, params );
-        range    = SH3::getSurfelRange(surface, params);
-        embedder = SH3::getSCellEmbedder(K);
+        surface    = SH3::makeLightDigitalSurface( image, K, params );
+        range      = SH3::getSurfelRange(surface, params);
+        embedder   = SH3::getCellEmbedder(K);
+        scembedder = SH3::getSCellEmbedder(K);
     
         SetBounds(im);
         nbCells = range.size();
@@ -61,7 +62,14 @@ public:
 
         void FillCellCoordinates(double* coords) const override
         {
-            auto pt = surf->embedder(*it);
+            // auto pt = surf->embedder(*it);
+            // #FIXME: Simply multiply by 0.5. Otherwise, it triggers an
+            // invalid cell assert... 
+            std::array<double, 3> pt = {
+                0.5 * it->preCell().coordinates[0], 
+                0.5 * it->preCell().coordinates[1], 
+                0.5 * it->preCell().coordinates[2]
+            };
             coords[0] = pt[0] * surf->cellSize[0];
             coords[1] = pt[1] * surf->cellSize[1]; 
             coords[2] = pt[2] * surf->cellSize[2];
@@ -85,6 +93,7 @@ public:
 private:
     DGtal::CountedPtr<SH3::BinaryImage> image; // Hold pointer to avoid early destruction
     DGtal::CountedPtr<SH3::LightDigitalSurface> surface; 
-    DGtal::CanonicSCellEmbedder<SH3::KSpace> embedder;
+    DGtal::CanonicSCellEmbedder<SH3::KSpace> scembedder;
+    DGtal::CanonicCellEmbedder<SH3::KSpace> embedder;
     SH3::SurfelRange range;
 };
