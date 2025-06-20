@@ -1,5 +1,5 @@
 set(classes
-  vtkComputeCurvature)
+  DGtalComputeIICurvature)
 
 vtk_module_add_module(ComputeCurvature
   CLASSES ${classes})

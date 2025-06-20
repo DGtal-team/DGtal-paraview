@@ -4,7 +4,7 @@
        a filter already in ParaView (in Remoting/Application/Resources/*.xml)
        that matches your filter and then model your xml on it -->
   <ProxyGroup name="filters">
-   <SourceProxy name="DGtal::ComputeCurvature" class="vtkComputeCurvature" label="DGtal::ComputeCurvature">
+   <SourceProxy name="DGtal::ComputeIICurvature" class="DGtalComputeIICurvature" label="DGtal::ComputeIICurvature">
      <Documentation
         long_help="Compute normals of a digital surface"
         short_help="Compute normals of a digital surface">

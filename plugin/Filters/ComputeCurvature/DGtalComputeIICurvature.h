@@ -6,7 +6,7 @@
 
 #include "ComputeCurvatureModule.h" // for export macro
 
-class COMPUTECURVATURE_EXPORT vtkComputeCurvature : public vtkUnstructuredGridAlgorithm
+class COMPUTECURVATURE_EXPORT DGtalComputeIICurvature : public vtkUnstructuredGridAlgorithm
 {
 public:
   enum class CurvatureType
@@ -15,16 +15,16 @@ public:
       GAUSSIAN_CURVATURE = 2
   };
 
-  static vtkComputeCurvature* New();
-  vtkTypeMacro(vtkComputeCurvature, vtkUnstructuredGridAlgorithm);
+  static DGtalComputeIICurvature* New();
+  vtkTypeMacro(DGtalComputeIICurvature, vtkUnstructuredGridAlgorithm);
   
   int RequestData(vtkInformation *request,
                   vtkInformationVector **inputVectors,
                   vtkInformationVector *outputVector);
 
   // Not using enum for now
-  void SetCurvatureType(int type);
 
+  void SetCurvatureType(int type);
   void PrintSelf(ostream& os, vtkIndent indent) override;
 
 protected:
@@ -32,12 +32,12 @@ protected:
 
 
 protected:
-  vtkComputeCurvature();
-  ~vtkComputeCurvature();
+  DGtalComputeIICurvature();
+  ~DGtalComputeIICurvature();
 
 private:
-  vtkComputeCurvature(const vtkComputeCurvature&) = delete;
-  void operator=(const vtkComputeCurvature&) = delete;
+  DGtalComputeIICurvature(const DGtalComputeIICurvature&) = delete;
+  void operator=(const DGtalComputeIICurvature&) = delete;
 };
 
 #endif

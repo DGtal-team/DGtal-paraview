@@ -18,8 +18,9 @@ public:
         auto params = SH3::defaultParameters() | SHG3::defaultParameters();
         auto K = SH3::getKSpace(image, params);
 
-        surface = SH3::makeLightDigitalSurface( image, K, params );
-        range   = SH3::getSurfelRange(surface, params);
+        surface  = SH3::makeLightDigitalSurface( image, K, params );
+        range    = SH3::getSurfelRange(surface, params);
+        embedder = SH3::getSCellEmbedder(K);
     
         SetBounds(im);
         nbCells = range.size();
@@ -60,10 +61,10 @@ public:
 
         void FillCellCoordinates(double* coords) const override
         {
-            // Don't know yet why I should multiply by 0.5 ? 
-            coords[0] = 0.5 * it->preCell().coordinates[0] * surf->cellSize[0];
-            coords[1] = 0.5 * it->preCell().coordinates[1] * surf->cellSize[1]; 
-            coords[2] = 0.5 * it->preCell().coordinates[2] * surf->cellSize[2];
+            auto pt = surf->embedder(*it);
+            coords[0] = pt[0] * surf->cellSize[0];
+            coords[1] = pt[1] * surf->cellSize[1]; 
+            coords[2] = pt[2] * surf->cellSize[2];
         }
         
         const DGtalVTKSurface* surf;
@@ -84,5 +85,6 @@ public:
 private:
     DGtal::CountedPtr<SH3::BinaryImage> image; // Hold pointer to avoid early destruction
     DGtal::CountedPtr<SH3::LightDigitalSurface> surface; 
+    DGtal::CanonicSCellEmbedder<SH3::KSpace> embedder;
     SH3::SurfelRange range;
 };

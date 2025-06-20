@@ -3,32 +3,32 @@
 #include <vtkInformation.h>
 #include <vtkInformationVector.h>
 
-#include "vtkComputeCurvature.h"
+#include "DGtalComputeIICurvature.h"
 
 #include "../utils/DGtalVTKSurface.h"
 #include "../utils/VTKToDGtalVTKImage.h"
 #include "../utils/DGtalVTKAbstractContainerToVTK.h"
 
 
-vtkStandardNewMacro(vtkComputeCurvature);
+vtkStandardNewMacro(DGtalComputeIICurvature);
 
 //----------------------------------------------------------------------------
-vtkComputeCurvature::vtkComputeCurvature() 
+DGtalComputeIICurvature::DGtalComputeIICurvature() 
 {
   this->SetNumberOfInputPorts(1);
 }
 
 //----------------------------------------------------------------------------
-vtkComputeCurvature::~vtkComputeCurvature() = default;
+DGtalComputeIICurvature::~DGtalComputeIICurvature() = default;
 
 //----------------------------------------------------------------------------
-void vtkComputeCurvature::PrintSelf(ostream& os, vtkIndent indent)
+void DGtalComputeIICurvature::PrintSelf(ostream& os, vtkIndent indent)
 {
   this->Superclass::PrintSelf(os, indent);
 }
 
 //----------------------------------------------------------------------------
-void vtkComputeCurvature::SetCurvatureType(int type)
+void DGtalComputeIICurvature::SetCurvatureType(int type)
 {
     curvatureType = static_cast<CurvatureType>(type);
     this->Modified();
@@ -36,7 +36,7 @@ void vtkComputeCurvature::SetCurvatureType(int type)
 
 
 //----------------------------------------------------------------------------
-int vtkComputeCurvature::RequestData(vtkInformation *request,
+int DGtalComputeIICurvature::RequestData(vtkInformation *request,
                                    vtkInformationVector **inputVectors,
                                    vtkInformationVector *outputVector)
 {
@@ -45,27 +45,29 @@ int vtkComputeCurvature::RequestData(vtkInformation *request,
   DGtalVTKImage image = GetImageFromVtkInformation(inputVectors[0]->GetInformationObject(0));
   DGtalVTKSurface surface(image); 
 
-  std::vector<double> curvature;
+  ScalarData curvature;
   switch(curvatureType)
   {
     case CurvatureType::MEAN_CURVATURE:
     {
-      curvature = SHG3::getIIMeanCurvatures( surface.GetImage(), surface.GetSurfelRange(), params );
+      curvature.data = SHG3::getIIMeanCurvatures( surface.GetImage(), surface.GetSurfelRange(), params );
+      curvature.name = "IIMeanCurvature";
       break;
     }
     case CurvatureType::GAUSSIAN_CURVATURE:
     {
-      curvature = SHG3::getIIGaussianCurvatures( surface.GetImage(), surface.GetSurfelRange(), params );
+      curvature.data = SHG3::getIIGaussianCurvatures( surface.GetImage(), surface.GetSurfelRange(), params );
+      curvature.name = "IIGaussianCurvature";
       break;
     }
     default:
     {
-      vtkVLog(vtkLogger::VERBOSITY_ERROR, "Unknown curvatyre type");
+      vtkVLog(vtkLogger::VERBOSITY_ERROR, "Unknown curvature type");
       break;
     }      
   };
 
-  vtkSmartPointer<vtkUnstructuredGrid> grid = GetVtkDataSetFromAbstractContainer(&surface, &curvature);
+  vtkSmartPointer<vtkUnstructuredGrid> grid = GetVtkDataSetFromAbstractContainer(&surface, curvature);
   outputVector->GetInformationObject(0)->Set(vtkDataObject::DATA_OBJECT(), grid);
   return 1;
 }
