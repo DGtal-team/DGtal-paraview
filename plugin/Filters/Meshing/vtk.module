@@ -1,0 +1,6 @@
+NAME
+  Meshing
+DEPENDS
+  VTK::FiltersCore
+  VTK::CommonCore
+

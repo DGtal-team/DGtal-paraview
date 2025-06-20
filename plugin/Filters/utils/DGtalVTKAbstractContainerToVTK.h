@@ -154,6 +154,7 @@ inline vtkDataArray* CellVectorFromDGtalVTKAbstractContainer(const DGtalVTKAbstr
 
     return vtkData;
 }
+
 inline vtkSmartPointer<vtkUnstructuredGrid> GetVtkDataSetFromAbstractContainer(
     const DGtalVTKAbstractContainer* container, 
     const std::vector<ScalarData>& voxelScalarData, 

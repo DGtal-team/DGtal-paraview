@@ -55,6 +55,25 @@
       </IntVectorProperty>
 
    </SourceProxy>
+
+   <SourceProxy name="DGtal::MeshDigitalSurface" class="DGtalDigitalSurfaceToMesh" label="DGtal::MeshDigitalSurface">
+     <Documentation
+        long_help="Create a mesh of a digital surface"
+        short_help="Create a mesh of a digital surface">
+     </Documentation>
+    
+     <InputProperty
+        name="Input"
+        command="SetInputConnection">
+           <ProxyGroupDomain name="groups">
+             <Group name="sources"/>
+             <Group name="filters"/>
+           </ProxyGroupDomain>
+           <DataTypeDomain name="input_type">
+             <DataType value="vtkDataSet"/>
+           </DataTypeDomain>
+      </InputProperty>
+   </SourceProxy>
   </ProxyGroup>
 
 
