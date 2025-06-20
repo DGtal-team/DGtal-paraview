@@ -157,7 +157,8 @@ inline vtkDataArray* CellVectorFromDGtalVTKAbstractContainer(const DGtalVTKAbstr
 inline vtkSmartPointer<vtkUnstructuredGrid> GetVtkDataSetFromAbstractContainer(
     const DGtalVTKAbstractContainer* container, 
     const std::vector<ScalarData>& voxelScalarData, 
-    const std::vector<VectorData>& voxelVectorData
+    const std::vector<VectorData>& voxelVectorData, 
+    const VectorData& normals = {}
 )
 {
     auto grid = vtkSmartPointer<vtkUnstructuredGrid>::New();
@@ -187,6 +188,18 @@ inline vtkSmartPointer<vtkUnstructuredGrid> GetVtkDataSetFromAbstractContainer(
         if (data != nullptr)
         {
             grid->GetCellData()->AddArray(data);
+            data->Delete();
+        }
+    }
+
+    // Set normals if any
+    if (normals.data.size() != 0)
+    {
+        std::cout << "Setting normals" << std::endl;
+        vtkDataArray* data = CellVectorFromDGtalVTKAbstractContainer(container, normals);
+        if (data != nullptr)
+        {
+            grid->GetCellData()->SetNormals(data);
             data->Delete();
         }
     }

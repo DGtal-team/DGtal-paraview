@@ -39,6 +39,7 @@ int DGtalIIEstimators::RequestData(vtkInformation *request,
 
   std::vector<ScalarData> curvatures;
   std::vector<VectorData> curvaturesDirs;
+  VectorData normals;
 
   if (computeMean) 
   {
@@ -85,14 +86,33 @@ int DGtalIIEstimators::RequestData(vtkInformation *request,
     curvaturesDirs.push_back({"IISecondPrincipalCurvatureDir", std::move(d2)});
   }
 
-  if (curvatures.size() == 0) 
+  if (computeNormals)
+  {
+    auto data = SHG3::getIINormalVectors(surface.GetImage(), surface.GetSurfelRange(), params);
+
+    std::vector<std::array<double, 3>> normalData(data.size());
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+      for (size_t j = 0; j < 3; ++j)
+      {
+        normalData[i][j] = data[i][j];
+      }
+    }
+    normals.name = "IINormals";
+    normals.data = std::move(normalData);
+
+    // Also as a vector so it can be viewed 
+    curvaturesDirs.push_back(normals);
+  }
+
+  if (curvatures.size() == 0 && normals.data.size() == 0) 
   {
     vtkVLog(vtkLogger::VERBOSITY_ERROR, "Computation produced no output. Please check that at least one of the curvature is selected");
     return 0;
   }
 
   vtkSmartPointer<vtkUnstructuredGrid> grid = GetVtkDataSetFromAbstractContainer(
-      &surface, curvatures, curvaturesDirs
+      &surface, curvatures, curvaturesDirs, normals
   );
   outputVector->GetInformationObject(0)->Set(vtkDataObject::DATA_OBJECT(), grid);
   return 1;
