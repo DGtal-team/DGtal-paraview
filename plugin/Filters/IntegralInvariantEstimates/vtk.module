@@ -1,5 +1,5 @@
 NAME
-  ComputeCurvature
+  IntegralInvariantEstimates
 DEPENDS
   VTK::FiltersCore
   VTK::CommonCore

@@ -4,13 +4,13 @@
 #include <vtkAlgorithm.h>
 #include <vtkUnstructuredGridAlgorithm.h>
 
-#include "ComputeCurvatureModule.h" // for export macro
+#include "IntegralInvariantEstimatesModule.h" // for export macro
 
-class COMPUTECURVATURE_EXPORT DGtalComputeIICurvature : public vtkUnstructuredGridAlgorithm
+class INTEGRALINVARIANTESTIMATES_EXPORT DGtalIIEstimators : public vtkUnstructuredGridAlgorithm
 {
 public:
-  static DGtalComputeIICurvature* New();
-  vtkTypeMacro(DGtalComputeIICurvature, vtkUnstructuredGridAlgorithm);
+  static DGtalIIEstimators* New();
+  vtkTypeMacro(DGtalIIEstimators, vtkUnstructuredGridAlgorithm);
   
   int RequestData(vtkInformation *request,
                   vtkInformationVector **inputVectors,
@@ -28,12 +28,12 @@ protected:
   
 
 protected:
-  DGtalComputeIICurvature();
-  ~DGtalComputeIICurvature();
+  DGtalIIEstimators();
+  ~DGtalIIEstimators();
 
 private:
-  DGtalComputeIICurvature(const DGtalComputeIICurvature&) = delete;
-  void operator=(const DGtalComputeIICurvature&) = delete;
+  DGtalIIEstimators(const DGtalIIEstimators&) = delete;
+  void operator=(const DGtalIIEstimators&) = delete;
 };
 
 #endif

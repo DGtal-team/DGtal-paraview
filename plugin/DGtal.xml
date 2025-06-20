@@ -4,10 +4,10 @@
        a filter already in ParaView (in Remoting/Application/Resources/*.xml)
        that matches your filter and then model your xml on it -->
   <ProxyGroup name="filters">
-   <SourceProxy name="DGtal::ComputeIICurvature" class="DGtalComputeIICurvature" label="DGtal::ComputeIICurvature">
+   <SourceProxy name="DGtal::IntegralInvariantEstimator" class="DGtalIIEstimator" label="DGtal::IntegralInvariantEstimator">
      <Documentation
-        long_help="Compute normals of a digital surface"
-        short_help="Compute normals of a digital surface">
+        long_help="Compute Integral Invariant curvature / normals of a digital surface"
+        short_help="Integral Invariant estimators">
      </Documentation>
     
      <InputProperty

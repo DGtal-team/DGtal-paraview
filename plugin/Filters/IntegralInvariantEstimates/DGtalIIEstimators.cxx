@@ -3,32 +3,32 @@
 #include <vtkInformation.h>
 #include <vtkInformationVector.h>
 
-#include "DGtalComputeIICurvature.h"
+#include "DGtalIIEstimators.h"
 
 #include "../utils/DGtalVTKSurface.h"
 #include "../utils/VTKToDGtalVTKImage.h"
 #include "../utils/DGtalVTKAbstractContainerToVTK.h"
 
 
-vtkStandardNewMacro(DGtalComputeIICurvature);
+vtkStandardNewMacro(DGtalIIEstimators);
 
 //----------------------------------------------------------------------------
-DGtalComputeIICurvature::DGtalComputeIICurvature() 
+DGtalIIEstimators::DGtalIIEstimators() 
 {
   this->SetNumberOfInputPorts(1);
 }
 
 //----------------------------------------------------------------------------
-DGtalComputeIICurvature::~DGtalComputeIICurvature() = default;
+DGtalIIEstimators::~DGtalIIEstimators() = default;
 
 //----------------------------------------------------------------------------
-void DGtalComputeIICurvature::PrintSelf(ostream& os, vtkIndent indent)
+void DGtalIIEstimators::PrintSelf(ostream& os, vtkIndent indent)
 {
   this->Superclass::PrintSelf(os, indent);
 }
 
 //----------------------------------------------------------------------------
-int DGtalComputeIICurvature::RequestData(vtkInformation *request,
+int DGtalIIEstimators::RequestData(vtkInformation *request,
                                          vtkInformationVector **inputVectors,
                                          vtkInformationVector *outputVector)
 {
